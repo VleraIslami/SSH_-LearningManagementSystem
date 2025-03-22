@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
+from environs import Env
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #Custom apps
+    # Custom apps
     'core',
     'userauths',
     'api',
@@ -69,7 +72,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join ( BASE_DIR , 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,15 +135,19 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR , "static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 STATIC_ROOT = BASE_DIR / 'templates'
 
-MEDIA_URL ='/media/' #menyra qysh e thirrim eshte psh 127.0.0.1/media/emri i fotos
-MEDIA_ROOT = BASE_DIR /'media'
+MEDIA_URL = '/media/'  # menyra qysh e thirrim eshte psh 127.0.0.1/media/emri i fotos
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 AUTH_USER_MODEL = 'userauths.User'
+
+# ne kete menyre eshte me save se me shkru diretk
+MAILGUN_SECRET_KEY = env("MAILGUN_SECRET_KEY")
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -148,15 +155,15 @@ AUTH_USER_MODEL = 'userauths.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-JAZZMIN_SETTINGS ={
-      "site_title": "Library Admin",
-      "site_header": "Library",
-       "site_brand": "Library-1",
-       "site_logo": "books/img/logo.png",   # munem me lan qfaredo logo
-        "welcome_sign": "Welcome to the library",
-        "copyright": "Acme Library Ltd",
+JAZZMIN_SETTINGS = {
+    "site_title": "Library Admin",
+    "site_header": "Library",
+    "site_brand": "Library-1",
+    "site_logo": "books/img/logo.png",   # munem me lan qfaredo logo
+    "welcome_sign": "Welcome to the library",
+    "copyright": "Acme Library Ltd",
 
-        "show_ui_builder" : False,
+    "show_ui_builder": False,
 
 }
 
@@ -190,7 +197,7 @@ JAZZMIN_UI_TWEAKS = {
         "danger": "btn-danger",
         "success": "btn-success"
     },
-    #"actions_sticky_top": False
+    # "actions_sticky_top": False
 }
 
 SIMPLE_JWT = {
