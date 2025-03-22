@@ -8,6 +8,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     full_name = models.CharField(unique=True, max_Length=100)
     opt = models.CharField(max_Length=100, null=True, blank=True)
+    refresh_token = models.CharField(max_Length=100, null=True, blank=True)
 
 
 USERNAME_FIELD = 'email'
