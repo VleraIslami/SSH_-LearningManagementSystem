@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'coreheaders',
+    'anymail',  # mujm me perdor edhe tjera
+
 ]
 
 MIDDLEWARE = [
@@ -147,6 +149,8 @@ AUTH_USER_MODEL = 'userauths.User'
 
 # ne kete menyre eshte me save se me shkru diretk
 MAILGUN_SECRET_KEY = env("MAILGUN_SECRET_KEY")
+MAILERSEND_API_TOKEN = env("MAILERSEND_API_TOKEN")
+MAILGUN_SENDER_DOMAIN = env("MAILGUN_SENDER_DOMAIN")
 
 
 # Default primary key field type
