@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.cb.models.signals import post_save
+from django.db.models.signals import post_save
 
 
 class User(AbstractUser):
