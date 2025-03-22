@@ -147,11 +147,22 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 AUTH_USER_MODEL = 'userauths.User'
 
+# MAILGUN_SECRET_KEY = env("MAILGUN_SECRET_KEY")
+
+
 # ne kete menyre eshte me save se me shkru diretk
-MAILGUN_SECRET_KEY = env("MAILGUN_SECRET_KEY")
+MAILGUN_API_KEY = env("MAILGUN_API_KEY")
 MAILERSEND_API_TOKEN = env("MAILERSEND_API_TOKEN")
 MAILGUN_SENDER_DOMAIN = env("MAILGUN_SENDER_DOMAIN")
 
+ANYMAIL = {
+    "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
+    "MAILGUN_SENDER_DOMAIN": env("MAILGUN_SENDER_DOMAIN"),
+
+}
+# FROM_EMAIL=myemail@gmail.com
+FROM_EMAIL = env("FROM_EMAIL")
+EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
