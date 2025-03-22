@@ -27,7 +27,7 @@ def generate_random_opt(Length=7):
     return opt
 
 
-def PasswordResetEmailVerifyAPIView(generics.RetrieveAPIView):
+class PasswordResetEmailVerifyAPIView(generics.RetrieveAPIView):
 
     permission_class = [AllowAny]
     serializer_class = api_serializer.UserSerializer
