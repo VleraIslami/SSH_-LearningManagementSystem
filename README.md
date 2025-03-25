@@ -1,1 +1,1 @@
-# SSH_StudentManagementSystem
+# SSH_LearningManagementSystem
