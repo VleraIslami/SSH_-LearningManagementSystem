@@ -36,9 +36,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
-
-    'django.contrib.admin',
+    # 'jazzmin',
+    #    'jazzmin', me bo koment kur dojm me bo migrim
+    'django.contrib.admin'
+    # 'django.contrib.admin', me bo koment kur dojm me bo migrim
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
