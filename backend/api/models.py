@@ -4,11 +4,11 @@ from django.db.models.signals import post_save
 
 
 class User(AbstractUser):
-    username = models.CharField(unique=True, max_Length=100)
+    username = models.CharField(unique=True, max_length=100)
     email = models.EmailField(unique=True)
-    full_name = models.CharField(unique=True, max_Length=100)
-    opt = models.CharField(max_Length=100, null=True, blank=True)
-    refresh_token = models.CharField(max_Length=100, null=True, blank=True)
+    full_name = models.CharField(unique=True, max_length=100)
+    opt = models.CharField(max_length=100, null=True, blank=True)
+    refresh_token = models.CharField(max_length=100, null=True, blank=True)
 
 
 USERNAME_FIELD = 'email'
@@ -33,8 +33,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # nuk eshte komplet rreshti per image
     # image=models.FileField(upload_to="user_folder", default="default-user.jpg",)
-    full_name = models.CharField(max_Length=100)
-    country = models.CharField(max_Length=100, null=True, blank=True)
+    full_name = models.CharField(max_length=100)
+    country = models.CharField(max_length=100, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     # vazhdon ende class Profile

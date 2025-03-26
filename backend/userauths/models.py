@@ -23,7 +23,7 @@ class User(AbstractUser):
         super(User, self).save(*args, **kwargs)
 
 
-class Profile(models.Mode):
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.FileField(upload_to="user_folder", default="default-user.jpg", null=True, blank=True)
     full_name = models.CharField(max_length=100)

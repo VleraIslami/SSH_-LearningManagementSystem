@@ -65,9 +65,9 @@ class PasswordResetEmailVerifyAPIView(generics.RetrieveAPIView):
                 "username": user.username
             }
 
-            subject = "Password Rest Email"
-            text_body = render_to_string("email/password_reset.txt", context=)
-            html_body = render_to_string("email/password_reset.html", context=)
+            subject = "Password Reset Email"
+            text_body = render_to_string("email/password_reset.txt", context)
+            html_body = render_to_string("email/password_reset.html", context)
 
             msg = EmailMultiAlternatives
             (

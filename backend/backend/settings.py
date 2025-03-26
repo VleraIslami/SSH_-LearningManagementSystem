@@ -36,15 +36,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # 'jazzmin',
+    'jazzmin',
     #    'jazzmin', me bo koment kur dojm me bo migrim
-    'django.contrib.admin'
-    # 'django.contrib.admin', me bo koment kur dojm me bo migrim
+    #'django.contrib.admin'
+    
+    #'django.contrib.admin', me bo koment kur dojm me bo migrim
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin.models.LogEntry', 
 
     # Custom apps
     'core',
@@ -54,7 +56,7 @@ INSTALLED_APPS = [
     # Third Party Apps
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
-    'coreheaders',
+    #'coreheaders',
     'anymail',  # mujm me perdor edhe tjera
     'drf_yasg'
 
@@ -162,7 +164,7 @@ ANYMAIL = {
     "MAILGUN_SENDER_DOMAIN": env("MAILGUN_SENDER_DOMAIN"),
 
 }
-# FROM_EMAIL=myemail@gmail.com
+#FROM_EMAIL=email@gmail.com
 FROM_EMAIL = env("FROM_EMAIL")
 EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 
