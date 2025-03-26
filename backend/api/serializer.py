@@ -1,7 +1,9 @@
 
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtaionPairSerializer
+
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 
 from userauths.models import Profile, User
 
@@ -37,8 +39,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create(
-            full_name=validated_data_['full_name'],
-            email=validated_data_['email'],
+            full_name=validated_data['full_name'],
+            email=validated_data['email'],
         )
 
         # e kemi nda email tek karakteri @ pastaj e marim veq "username te emails edhe shenjen _(mundet cka do mu kon psh vlera me pas emrin)"
