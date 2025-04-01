@@ -1,4 +1,4 @@
-#!C:\Users\Admin\Desktop\SSH_StudentManagementSystem\backend\venv\Scripts\python.exe
+#!C:\Users\Online\Desktop\GitHub\SSH_StudentManagementSystem\backend\venv\scripts\python.exe
 
 import sys
 import json

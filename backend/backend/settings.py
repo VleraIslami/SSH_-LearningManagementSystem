@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin.models.LogEntry',
+    # 'django.contrib.admin.models.LogEntry', #nuk duhet hiq
+
+
     'core',
     'userauths',
     'api',
