@@ -69,16 +69,22 @@ class PasswordResetEmailVerifyAPIView(generics.RetrieveAPIView):
             text_body = render_to_string("email/password_reset.txt", context)
             html_body = render_to_string("email/password_reset.html", context)
 
-            msg = EmailMultiAlternatives
-            (
+            msg = EmailMultiAlternatives(
                 subject=subject,
+                body=text_body,
                 from_email=settings.FROM_EMAIL,
-                to=[user.email],
-                body=text_body
+                to=[user.email]
             )
 
             msg.attach_alternative(html_body, "text/html")
             msg.send()
+
+    #     msg = EmailMultiAlternatives(
+    # subject=subject,
+    # from_email=settings.FROM_EMAIL,
+    # to=[user.email],
+    # body=text_body
+    #         )
 
             print("link=====", link)
 
