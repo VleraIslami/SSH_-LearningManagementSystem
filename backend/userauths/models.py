@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class User(AbstractUser):
     username = models.CharField(unique=True, max_length=100)
@@ -14,11 +15,12 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
-    def save(self,*args, **kwargs):
-        email_username, full_name = self.email.split("@") #name@gmail.con
-        if self.full_name == "" or self.full_name == None:
-            self.full_name == email_username
-        if self.username == "" or self.username == None:
+    def save(self, *args, **kwargs):
+        # Korrektimi i gabimit në metodën save
+        email_username, _ = self.email.split("@")
+        if not self.full_name:  # Përdor "if not self.full_name" për të kontrolluar nëse është None ose bosh
+            self.full_name = email_username
+        if not self.username:  # Po ashtu për username
             self.username = email_username
         super(User, self).save(*args, **kwargs)
 
@@ -32,26 +34,23 @@ class Profile(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        if self.full_name:
-            return str(self.full_name)
-        else:
-            return str(self.user.full_name)
+        # Përdorim full_name nga përdoruesi nëse nuk ka një të dhënë
+        return self.full_name if self.full_name else self.user.full_name
 
     def save(self, *args, **kwargs):
-        email_username, full_name = self.email.split("@")
-        if self.full_name == "" or self.full_name == None:
-            self.full_name == email_username
+        # Përdorim emailin nga model User
+        if not self.full_name:
+            self.full_name = self.user.email.split("@")[0]  # Përdor email_username nga email-i
         super(Profile, self).save(*args, **kwargs)
 
+
+# Krijimi i Profile pas krijimit të një përdoruesi të ri
+@receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
-def save_user_profile(sender,instance, **kwargs):
+# Ruajtja e profile pas përditësimit të përdoruesit
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
-
-post_save.connect(create_user_profile, sender=User)
-post_save.connect(save_user_profile, sender=User)
-    
-
-

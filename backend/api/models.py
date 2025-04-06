@@ -10,31 +10,43 @@ class User(AbstractUser):
     opt = models.CharField(max_length=100, null=True, blank=True)
     refresh_token = models.CharField(max_length=100, null=True, blank=True)
 
+    # Përdor related_name për të shmangur përplasjet
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='api_user_groups',  # Emër unik për këtë model
+        blank=True
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='api_user_permissions',  # Emër unik për këtë model
+        blank=True
+    )
 
-USERNAME_FIELD = 'email'
-REQURIED_FIELDS = ['username']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
+    def __str__(self):
+        return self.email
 
-def __str__(self):
-    return self.email
+    def save(self, *args, **kwargs):
+        email_username, _ = self.email.split("@")
+        
+        if self.full_name is None:  # Korrigjim për kontrollin e None
+            self.full_name = email_username  # Përdor email_username nëse full_name është None
 
-
-def save(self, *args, **kwargs):
-    email_username, full_name = self.email.split("@")
-    if self.full_name == self.full_name == None:
-        self.full_name == email_username
-
-    if self.username == "" or self.username == None:
-        self.username = email_username
-    super(User, self).save(*args, **kwargs)
+        if not self.username:  # Kontrollo për një username të zbrazët ose None
+            self.username = email_username  # Përdor email_username për username nëse është zbrazët
+        
+        super(User, self).save(*args, **kwargs)
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # nuk eshte komplet rreshti per image
-    # image=models.FileField(upload_to="user_folder", default="default-user.jpg",)
+    # image = models.FileField(upload_to="user_folder", default="default-user.jpg")  # Rreshti i komentuari për imazhin
     full_name = models.CharField(max_length=100)
     country = models.CharField(max_length=100, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    # vazhdon ende class Profile
+
+    def __str__(self):
+        return self.user.email  # Shto për të shfaqur email-in e përdoruesit në Profile

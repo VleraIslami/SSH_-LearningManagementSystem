@@ -6,9 +6,14 @@ from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenRefreshView
 
 
-from rest_framework import parmissions
+from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from django.contrib import admin
+from django.urls import path
+
+
+
 
 
 schema_view = get_schema_view(
@@ -28,7 +33,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0),
          name='schema-json'),
-    path('', schema_view.with_ui('swagger', cashe_timeout=0),
+    path('', schema_view.with_ui('swagger', cache_timeout=0),
          name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',
          cache_timeout=0), name='schema-swagger-ui'),
@@ -52,5 +57,5 @@ urlpatterns = [
          api_views.PasswordResetEmailVerifyAPIView.as_view()),
     # ka mundesi del nje error si  no such coulumn userauths_user.refresh_token
     # edhe duhet me shku me ndez serverin(makemigrations) pastaj migrate (13)
-    path("user/password-change/", api_views.PasswordChangeAPIView.as_view())
+    path("user/password-change/", api_views.PasswordChangeApiView.as_view())
 ]
