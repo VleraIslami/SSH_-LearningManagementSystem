@@ -23,10 +23,11 @@ function Register() {
     const { error } = await register(fullName, email, password, password2);
     if (error) {
       alert(error);
-    
+      setIsLoading(false);
     } else {
       navigate("/");
       alert("Registration Successfully, you have now been logged in");
+      setIsLoading(false);
     }
   };
 
