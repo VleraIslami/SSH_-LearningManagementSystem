@@ -1,9 +1,10 @@
 import {useEffect, useState} from "react";
-import {setUser} from "../utilsauth";
+import {setUser} from "../utils/auth";
+
 
 
 const MainWrapper=({children}) =>{  //kur thirret "projecti" vjen krejt kodi posht, nese jo
-    const=[loding,setLoading]=useState(true); //e gjejm nje variabel edhe eerdorimme set data
+    const [loding,setLoading]=useState(true); //e gjejm nje variabel edhe eerdorimme set data
 
     useEffect(()=>{
         const handler= async()=>{

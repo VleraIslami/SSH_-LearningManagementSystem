@@ -4,7 +4,7 @@ import { CartContext } from "../plugin/Context";
 import { useAuthStore } from "../../store/auth";
 
 function BaseHeader() {
-    const [cartCount, setCartCount] = useContext(CartContext);
+    const [ cartCount, setCartCount ] = useContext(CartContext);
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
 
@@ -13,6 +13,7 @@ function BaseHeader() {
     };
 
     const [isLoggedIn, user] = useAuthStore((state) => [state.isLoggedIn, state.user]);
+    
 
     return (
         <div>
