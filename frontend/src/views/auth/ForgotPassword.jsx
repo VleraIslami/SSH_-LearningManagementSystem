@@ -52,7 +52,7 @@ function ForgotPassword() {
                       id="email"
                       className="form-control"
                       name="email"
-                      placeholder="johndoe@gmail.com"
+                      placeholder="email@gmail.com"
                       required
                       onChange={(e) => setEmail(e.target.value)}
                     />
