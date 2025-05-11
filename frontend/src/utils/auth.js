@@ -13,7 +13,6 @@ export const login = async (email, password) => {
         
         if(status ==  200) {
             setAuthUser(data.access, data.refresh);
-            alert("Login Successfull")
         }
 
         return {data, error: null};
@@ -35,7 +34,6 @@ export const register = async(full_name, email, password, password2) => {
         });
 
         await login(email, password);
-        alert("Registration Successfull");
         return { data, error: null };
     }catch (error) {
         return{
