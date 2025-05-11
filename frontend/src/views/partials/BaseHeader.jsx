@@ -4,7 +4,7 @@ import { CartContext } from "../plugin/Context";
 import { useAuthStore } from "../../store/auth";
 
 function BaseHeader() {
-    const [ cartCount, setCartCount ] = useContext(CartContext);
+    const [ cartCount, setCartCount ] = useState(0);
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
 
