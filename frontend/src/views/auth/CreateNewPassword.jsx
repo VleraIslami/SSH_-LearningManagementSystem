@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import BaseHeader from "../partials/BaseHeader";
 import BaseFooter from "../partials/BaseFooter";
 import apiInstance from "../../utils/axios";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom"; //use nav e perdorim per ridirect ne nje faqe 
+// use search params e perdorim per me i marr parametrat ne backend
 import Toast from "../plugin/Toast";
 function CreateNewPassword() {
   const [password, setPassword] = useState("");
@@ -12,6 +13,7 @@ function CreateNewPassword() {
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
 
+  //qita jon 3 parametrat qe i kena marr prej backend
   const otp = searchParam.get("otp");
   const uuidb64 = searchParam.get("uuidb64");
   const refresh_token = searchParam.get("refresh_token");
@@ -19,26 +21,29 @@ function CreateNewPassword() {
   const handleCreatePassword = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    //kur nuk pershtaten passwordat
     if (confirmPassword !== password) {
       Toast().fire({
         icon: "warning",
         title: "Passwords does not match",
       });
       return;
-    } else {
+    } else {  //i merr key edhe value dy parametra prej backend
       const formdata = new FormData();
       formdata.append("password", password);
       formdata.append("otp", otp);
       formdata.append("uuidb64", uuidb64);
       formdata.append("refresh_token", refresh_token);
 
+      //try and catch per gabime 
       try {
         await apiInstance
           .post(`user/password-change/`, formdata)
           .then((res) => {
             console.log(res.data);
-            setIsLoading(false);
-            navigate("/login/");
+            setIsLoading(false); // nese ka error loading bon false
+            navigate("/login/"); // nese vazhdon mire na navigon te logini
             Toast().fire({
               icon: "warning",
               title: res.data.message,
@@ -82,7 +87,7 @@ function CreateNewPassword() {
                       id="password"
                       className="form-control"
                       name="password"
-                      placeholder="**************"
+                      placeholder=""
                       required=""
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -100,7 +105,7 @@ function CreateNewPassword() {
                       id="password"
                       className="form-control"
                       name="password"
-                      placeholder="**************"
+                      placeholder=""
                       required=""
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
@@ -113,7 +118,7 @@ function CreateNewPassword() {
                     <div className="d-grid">
                       {isLoading === true && (
                         <button
-                          disabled
+                          disabled //perderisa o tu bo load butoni bohet disable
                           type="submit"
                           className="btn btn-primary"
                         >
