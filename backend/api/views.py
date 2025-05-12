@@ -58,7 +58,7 @@ class PasswordResetEmailVerifyAPIView(generics.RetrieveAPIView):
 
             # localhost e ndrron qysh te pershtatet
             # duhet me pas nje refresh token
-            link = f"htpp://localhost:5173/create-new-password/?opt={user.opt}&uuidb64={uuidb64}&=refresh_token{refresh_token}"
+            link = f"htpp://localhost:5173/create-new-password/?opt={user.opt}&uuidb64={uuidb64}&refresh_token{refresh_token}"
 
             context = {
                 "link": link,

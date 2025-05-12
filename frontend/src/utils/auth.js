@@ -13,6 +13,10 @@ export const login = async (email, password) => {
 
     if (status == 200) {
       setAuthUser(data.access, data.refresh);
+    }
+
+    if (status == 200) {
+      setAuthUser(data.access, data.refresh);
       alert("Login Successfull");
     }
 
@@ -61,7 +65,6 @@ export const setUser = async () => {
     //   alert("Token does not exists");  // per fillim e kem bo
     return;
   }
-
   if (isAccessTokenExpired(access_token)) {
     const response = geRefreshedToken(refresh_token);
     setAuthUser(response.access, response.refresh);

@@ -3,8 +3,10 @@ import { Children, Navigate } from "react";
 import { useAuthStore } from "../store/auth";
 
 const PrivateRoute = ({ children }) => {
-  const loggedIn = useAuthStore((state) => state.isLoggedIn)();
+  // Merrni direkt vlerën e isLoggedIn nga useAuthStore
+  const loggedIn = useAuthStore((state) => state.isLoggedIn);
 
+  // Kontrollo nëse përdoruesi është loguar, nëse po kthe komponenetin, nëse jo, navigo në login
   return loggedIn ? <>{children}</> : <Navigate to="/login/" />;
 };
 

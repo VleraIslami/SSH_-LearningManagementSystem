@@ -26,7 +26,7 @@ function Register() {
       setIsLoading(false);
     } else {
       navigate("/");
-      alert("Registration Successfull, you have now been logged in");
+      alert("Registration Successfully, you have now been logged in");
       setIsLoading(false);
     }
   };
@@ -68,7 +68,7 @@ function Register() {
                       id="full_name"
                       className="form-control"
                       name="full_name"
-                      placeholder="John Doe"
+                      placeholder=""
                       required=""
                       onChange={(e) => setFullName(e.target.value)}
                     />
@@ -82,7 +82,7 @@ function Register() {
                       id="email"
                       className="form-control"
                       name="email"
-                      placeholder="johndoe@gmail.com"
+                      placeholder=""
                       required=""
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -98,7 +98,7 @@ function Register() {
                       id="password"
                       className="form-control"
                       name="password"
-                      placeholder="**************"
+                      placeholder=""
                       required=""
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -112,7 +112,7 @@ function Register() {
                       id="password"
                       className="form-control"
                       name="password"
-                      placeholder="**************"
+                      placeholder=""
                       required=""
                       onChange={(e) => setPassword2(e.target.value)}
                     />

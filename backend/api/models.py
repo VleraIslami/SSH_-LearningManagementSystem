@@ -45,8 +45,9 @@ class Profile(models.Model):
     # image = models.FileField(upload_to="user_folder", default="default-user.jpg")  # Rreshti i komentuari për imazhin
     full_name = models.CharField(max_length=100)
     country = models.CharField(max_length=100, null=True, blank=True)
-    about = models.TextField(null=True, blank=True)
+    about = models.TextField(null=True, blank=True) #mundem me lon edhe zbrazet 
     date = models.DateTimeField(auto_now_add=True)
+    # facebook= models.URLField(null=True, blank=True)  mundem me shtu naj rrjet social
 
     def __str__(self):
         return self.user.email  # Shto për të shfaqur email-in e përdoruesit në Profile
