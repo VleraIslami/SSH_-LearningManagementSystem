@@ -42,3 +42,4 @@ tzdata==2025.2
 uritemplate==4.1.1
 urllib3==1.26.18
 wheel==0.45.1
+moviepy==1.0.3
