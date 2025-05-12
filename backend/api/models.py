@@ -77,29 +77,33 @@ class Category(models.Model):
         return Course.objects.filter(category=self).count()
 
     def save(self, *args, **kwargs):
-       if self.slug == "" or self.slug == None:
-           self.slug = slugify(self.title)
+        if self.slug == "" or self.slug == None:
+            self.slug = slugify(self.title)
         super(Category, self).save(*args, **kwargs)
 
 
 class Course(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=True)
-    file=models.FileField(upload_to="course-file", blank=True, null=True)
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, null=True, blank=True)
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.CASCADE, null=True, blank=True)
+    file = models.FileField(upload_to="course-file", blank=True, null=True)
     image = models.FileField(upload_to="course-file", blank=True, null=True)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    price=models.DecimalField(max_digit=12, decimal_places=2, default=0.00)
+    price = models.DecimalField(max_digit=12, decimal_places=2, default=0.00)
     language = models.CharField(choices=LANGUAGE, default="English")
     level = models.CharField(choices=LEVEL, default="Beginner")
-    platform_status = models.CharField(choices=PLATFORM_STATUS, default="Published")
-    teacher_course_status = models.CharField(choices=TEACHER_STATUS, default="Published")
-    featured=models.BooleanField(default=False)
-    course_id=ShortUUIDField(unique=True, Length=6,max_Length=20, alphabet="0123456789")
-    slug = models.SlugField(unique=True,null=True, blank=True)
-    date=models.DateTimeField(default=timezone.now)
+    platform_status = models.CharField(
+        choices=PLATFORM_STATUS, default="Published")
+    teacher_course_status = models.CharField(
+        choices=TEACHER_STATUS, default="Published")
+    featured = models.BooleanField(default=False)
+    course_id = ShortUUIDField(
+        unique=True, Length=6, max_Length=20, alphabet="0123456789")
+    slug = models.SlugField(unique=True, null=True, blank=True)
+    date = models.DateTimeField(default=timezone.now)
 
-   
     class Meta:
         verbose_name_plural = "Course"
         ordering = ['title']
@@ -111,27 +115,6 @@ class Course(models.Model):
         if self.slug == "" or self.slug == None:
             self.slug = slugify(self.title)
         super(Course, self).save(*args, **kwargs)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 """ from django.db import models
