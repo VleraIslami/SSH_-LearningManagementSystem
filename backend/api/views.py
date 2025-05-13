@@ -220,3 +220,47 @@ class CartItemDeleteAPIView(generics.DestroyAPIView):
         return api_models.Cart.objects.get(cart_id=cart_id, id=item_id).first()
         # e bojm delete
 
+class CartStatsAPIView(generics.RetrieveAPIView):
+    serializer_class = api_serializer.CartSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'cart_id'
+
+    def get_queryset(self):
+        cart_id = self.kwargs['cart_id']
+        queryset = api_models.Cart.objects.filter(cart_id=cart_id)
+        return queryset
+    
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+
+        total_price = 0.00
+        total_tax = 0.00
+        total_total = 0.00
+
+        #iterojm neper secilin antare t queryset
+        for cart_item in queryset:
+            total_price += float(self.calculate_price(cart_item))
+            total_tax += float(self.calculate_tax(cart_item))
+            total_total += round(float(self.calculate_total(cart_item)), 2) # 2 nr mas presjes
+            # e bojm totalin
+
+        data ={
+             "price": total_price, #12 
+             "tax": total_tax, 
+             "total": total_total 
+
+        }
+        return Response(data)
+
+    def calculate_price(self, cart_item):
+        return cart_item.price 
+        # e bojm totalin
+    
+    def calculate_tax(self, cart_item):
+        return cart_item.tax_fee
+        # e bojm taxin
+
+    def calculate_total(self, cart_item):
+        return cart_item.total
+        # e bojm totalin
+
