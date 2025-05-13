@@ -94,10 +94,6 @@ class TeacherSerializer(serializers.ModelSerializer):
              "review",
         ]
 
-
-               
-   
-
 class VariantItemSerializer(serializers.ModelSerializer):
  
     class Meta:
@@ -108,7 +104,7 @@ class VariantItemSerializer(serializers.ModelSerializer):
 class VariantSerializer(serializers.ModelSerializer):
     variant_items =VariantItemSerializer()
     class Meta:
-        model = api_models.Variants
+        model = api_models.Variant
         fields = '__all__'
 
 class VariantItemSerializer(serializers.ModelSerializer):
@@ -116,9 +112,6 @@ class VariantItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = api_models.VariantItem
         fields = '__all__'
-
-
-
 
 class Question_Answer_MessageSerializer(serializers.ModelSerializer):
     Profile = ProfileSerializer(many=False)
@@ -140,8 +133,6 @@ class CartSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
-
 class CartOrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = api_models.CartOrderItem 
@@ -152,7 +143,6 @@ class CartOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = api_models.CartOrder
         fields = '__all__'
-
 
 
 class CertificateSerializer(serializers.ModelSerializer):
@@ -203,43 +193,49 @@ class CountrySerializer(serializers.ModelSerializer):
 
 
 class EnrolledCourseSerializer(serializers.ModelSerializer):
-    lectures = VariantItemSerializer(many=True, read_only=True)
-    completed_lessons= CompletedLessonSerializer(many=True, read_only=True)
-    curriculum = VariantItemSerializer(many=True, read_only=True)
-    note = NoteSerializer(many=True, read_only=True)
-    question_answer = Question_AnswerSerializer(many=True, read_only=True)
-    review =  ReviewSerializer(many=True, read_only=True)
+    lectures = VariantItemSerializer(many=True, read_only=True, source="lecture_set")
+    completed_lessons = CompletedLessonSerializer(many=True, read_only=True, source="completedlesson_set")
+    curriculum = VariantItemSerializer(many=True, read_only=True, source="curriculum_set")
+    note = NoteSerializer(many=True, read_only=True, source="note_set")
+    question_answer = Question_AnswerSerializer(many=True, read_only=True, source="question_answer_set")
+    review = ReviewSerializer(many=True, read_only=True, source="review_set")
+
     class Meta:
         model = api_models.EnrolledCourse
         fields = '__all__'
 
 
-class CourseSerializer(serializers.ModelSerializer):
-                students = EnrolledCourseSerializer(many=True)
-                curriculum = VariantItemSerializer(many=True)
-                lectures = VariantItemSerializer(many=True)
 
-                class Meta: model = api_models.Course
-                fields = [
-             "category",
-                "teacher",
-                "file",
-                "image",
-                "title",
-                "description",
-                "price",
-                "language",
-                "level",
-                "platform_status",
-                "teacher_course_status",
-                "featured",
-                "course_id",
-                "slug",
-                "date",
-                "students",
-                "curriculum",
-                "lectures",
-                "average_rating",
-                "rating_count",
-                "reviews"
+class CourseSerializer(serializers.ModelSerializer):
+    students = EnrolledCourseSerializer(many=True, read_only=True)
+    curriculum = VariantItemSerializer(many=True, read_only=True)
+    lectures = VariantItemSerializer(many=True, read_only=True)
+    average_rating = serializers.ReadOnlyField()  # Add this line
+    rating_count = serializers.ReadOnlyField()    # Add this line
+    reviews = ReviewSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = api_models.Course
+        fields = [
+            "category",
+            "teacher",
+            "file",
+            "image",
+            "title",
+            "description",
+            "price",
+            "language",
+            "level",
+            "platform_status",
+            "teacher_course_status",
+            "featured",
+            "course_id",
+            "slug",
+            "date",
+            "students",
+            "curriculum",
+            "lectures",
+            "average_rating",
+            "rating_count",
+            "reviews"
         ]

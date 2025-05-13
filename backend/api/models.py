@@ -88,8 +88,8 @@ class Teacher(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
-    image = models.FileField(upload_to="course-file", blank=True, null=True,
-                             default="category.jpg")  # Rreshti i komentuari për imazhin
+    image = models.FileField(upload_to="course-file", blank=True, null=True,default="category.jpg")  # Rreshti i komentuari për imazhin
+    active = models.BooleanField(default=True)
     slug = models.SlugField(unique=True)
 
     class Meta:
@@ -141,10 +141,10 @@ class Course(models.Model):
         return EnrolledCourse.objects.filter(course=self)
 
     def curriculm(self):
-        return VariantItem.objects.filter(variant_course=self)
+        return VariantItem.objects.filter(course=self)
 
-    def lectures(self):
-        return VariantItem.objects.filter(variant_course=self)
+def lectures(self):
+    return VariantItem.objects.filter(course=self)
 
     def average_rating(self):
         average_rating = Review.objects.filter(
@@ -329,7 +329,7 @@ class CompletedLesson(models.Model):
         return self.course.title
     
 class EnrolledCourse(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name="students", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
     order_item = models.ForeignKey(CartOrderItem, on_delete=models.CASCADE)

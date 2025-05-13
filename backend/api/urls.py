@@ -5,12 +5,18 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 
 urlpatterns = [
+    #Authentication Endpoints
+
     path("user/token/", api_views.MyTokenObtainPairView.as_view()),
     path("user/token/refresh/", TokenRefreshView.as_view()),
     path("user/register/", api_views.RegisterView.as_view()),
-    path("user/password-reset/<email>/",
-         api_views.PasswordResetEmailVerifyAPIView.as_view()),
+    path("user/password-reset/<email>/", api_views.PasswordResetEmailVerifyAPIView.as_view()),
     # ka mundesi del nje error si  no such coulumn userauths_user.refresh_token
     # edhe duhet me shku me ndez serverin(makemigrations) pastaj migrate (13)
-    path("user/password-change/", api_views.PasswordChangeApiView.as_view())
+    path("user/password-change/", api_views.PasswordChangeApiView.as_view()),
+
+    #Core Endpoints
+    path("course/category/", api_views.CategoryListAPIView.as_view()),
+    path("course/course-list/", api_views.CourseListAPIView.as_view()),
+    path("course/course-details/<slug>", api_views.CourseDetailAPIView.as_view())
 ] 

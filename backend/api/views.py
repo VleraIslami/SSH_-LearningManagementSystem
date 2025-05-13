@@ -4,8 +4,8 @@ from django.template.loader import render_to_string
 from django.conf import settings
 
 from api import serializer as api_serializer
+from api import models as api_models
 from userauths.models import User, Profile
-
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics, status
@@ -115,3 +115,25 @@ class PasswordChangeApiView(generics.CreateAPIView):
 
         else:
             return Response({"message": "User Does Not Exists"}, status=status.HTTP_404_NOT_FOUND)
+
+class CategoryListAPIView(generics.ListAPIView):
+    queryset = api_models.Category.objects.filter(active=True)
+    serializer_class = api_serializer.CategorySerializer
+    permission_classes = [AllowAny]
+
+class CourseListAPIView(generics.ListAPIView):
+    queryset = api_models.Course.objects.filter(platform_status = "Published", teacher_course_status = "Published")
+    serializer_class = api_serializer.CourseSerializer
+    permission_classes = [AllowAny]
+
+class CourseDetailAPIView(generics.RetrieveAPIView):
+    serializer_class = api_serializer.CourseSerializer
+    permission_classes = [AllowAny]
+    queryset = api_models.Course.objects.filter(platform_status = "Published", teacher_course_status = "Published")
+
+    # www.website-url.com/lms-website-using-django-and-react/
+
+    def get_object(self):
+        slug = self.kwargs['slug']
+        course = api_models.Course.objects.get(slug=slug, platform_status = "Published", teacher_course_status = "Published")
+        return course
