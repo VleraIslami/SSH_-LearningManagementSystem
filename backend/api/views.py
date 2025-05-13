@@ -336,7 +336,24 @@ class CreateOrderAPIView(generics.CreateAPIView):
 
 
 class CheckoutAPIView(generics.RetrieveAPIView):
-    serializer_class = api_serializer.CartOrderItemSerializer
+    serializer_class = api_serializer.CartOrderSerializer
     permission_classes = [AllowAny]
     queryset = api_models.CartOrder.objects.all()
     lookup_field = 'oid'
+
+
+class CouponApplyAPIView(generics.CreateAPIView):
+    serializer_class = api_serializer.CouponSerializer
+    permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        order_oid = request.data['order_id']
+        coupon_code = request.data['coupon_code']
+
+        order = api_models.CartOrder.objects.get(oid=order_oid)
+        coupon = api_models.Coupon.objects.get(code=coupon_code)
+
+        if coupon:
+            return Response({"message": "Coupon Found and Activated "}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"message": "Coupon Not Found"}, status=status.HTTP_404_NOT_FOUND)
