@@ -14,6 +14,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 
 import random
+from decimal import Decimal
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -137,3 +138,67 @@ class CourseDetailAPIView(generics.RetrieveAPIView):
         slug = self.kwargs['slug']
         course = api_models.Course.objects.get(slug=slug, platform_status = "Published", teacher_course_status = "Published")
         return course
+
+
+class CartApiView(generics.CreateAPIView):
+    queryset = api_models.Cart.objects.all()
+    serializer_class = api_serializer.CartSerializer
+    permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        course_id = request.data['course_id'] #ne kit mnyr i marrim te dhanat
+        user_id = request.data['user_id']
+        price = request.data['price']
+        country_name = request.data['country_name']
+        cart_id = request.data['cart_id']
+
+        # tash per me i barazu id e krejtve e perdorim first qe me marr tparin qe pershtatet
+        course = api_models.Course.objects.filter(id=course_id).first()
+        #user = User.objects.filter(id=user_id).first() # qikjo na prun error se nese ska usera ska qa kthen
+        #e bojm ni kusht if else nese ka usera
+        if user_id is "undefined":
+            user = User.objects.filter(id=user_id).first()
+        else:
+            user = None
+
+        #e bojm te njejtin sen me country 
+        try:
+            country_object = api_models.Country.objects.filter(name= country_name).first()  
+            country = country_object.name
+        except:
+            country_object = None
+            country = "United States" #default value
+        
+        if country_object:
+            tax_rate = country_object.tax_rate /100
+        else:
+            tax_rate = 0
+
+        cart = api_models.Cart.objects.filter(cart_id=cart_id, course=course).first()
+
+        if cart:
+            cart.course = course
+            cart.user = user
+            cart.price = price 
+            cart.tax_fee = Decimal(price) * Decimal(tax_rate)
+            cart.country = country
+            cart.cart_id = cart_id
+            cart.total = Decimal(price) + Decimal( cart.tax_fee)
+            cart.save()
+
+            return Response({"message": "Cart updated successfully"}, status=status.HTTP_200_OK)
+        else:
+            cart =api_models.Cart()
+
+            cart.course = course
+            cart.user = user
+            cart.price = price
+            cart.tax_fee = Decimal(price) * Decimal(tax_rate)
+            cart.country = country
+            cart.cart_id = cart_id
+            cart.total = Decimal(price) + Decimal(cart.tax_fee)
+            cart.save()
+            return Response({"message": "Cart created successfully"}, status=status.HTTP_201_CREATED)
+        
+
+
