@@ -309,14 +309,15 @@ class CartOrderItem(models.Model):
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="order_item")
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     tax_fee = models.DecimalField(
         max_digits=12, default=0.00, decimal_places=2)
     total = models.DecimalField(max_digits=12, default=0.00, decimal_places=2)
     initial_total = models.DecimalField(
         max_digits=12, default=0.00, decimal_places=2)
     saved = models.DecimalField(max_digits=12, default=0.00, decimal_places=2)
-    coupons = models.ForeignKey(
-        "api.Coupon", on_delete=models.SET_NULL, null=True, blank=True)
+    coupons = models.ManyToManyField("api.Coupon", blank=True)
+
     applied_coupon = models.BooleanField(default=True)
     oid = ShortUUIDField(unique=True, length=6,
                          max_length=20, alphabet="1234567890")

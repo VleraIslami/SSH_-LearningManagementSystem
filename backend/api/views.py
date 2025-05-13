@@ -347,13 +347,37 @@ class CouponApplyAPIView(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
-        order_oid = request.data['order_id']
+        order_oid = request.data['order_oid']
         coupon_code = request.data['coupon_code']
 
         order = api_models.CartOrder.objects.get(oid=order_oid)
         coupon = api_models.Coupon.objects.get(code=coupon_code)
 
         if coupon:
-            return Response({"message": "Coupon Found and Activated "}, status=status.HTTP_201_CREATED)
+            order_items = api_models.CartOrderItem.objects.filter(
+                order=order, teacher=coupon.teacher)
+            for i in order_items:
+                if not coupon in i.coupons.all():
+                    discount = i.total * coupon.discount/100
+
+                    i.total = i.total - discount
+                    i.price = i.price - discount
+                    i.saved = i.saved + discount
+                    i.applied_coupon = True
+                    i.coupons.add(coupon)
+
+                    order.coupons.add(coupon)
+                    order.total -= discount
+                    order.sub_total -= discount
+                    order.saved += discount
+
+                    i.save()
+                    order.save()
+                    # sa user e kan use coupon
+                    coupon.used_by.add(order.student)
+
+                    return Response({"message": "Coupon Found and Activated"}, status=status.HTTP_201_CREATED)
+                else:
+                    return Response({"message": "Coupon Already Applied"}, status=status.HTTP_200_OK)
         else:
             return Response({"message": "Coupon Not Found"}, status=status.HTTP_404_NOT_FOUND)
