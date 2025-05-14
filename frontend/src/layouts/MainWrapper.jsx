@@ -1,10 +1,9 @@
-<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { setUser } from "../utils/Auth";
 
 const MainWrapper = ({ children }) => {
   //kur thirret "projecti" vjen krejt kodi posht, nese jo
-  const [loding, setLoading] = useState(true); //e gjejm nje variabel edhe eerdorimme set data
+  const [loading, setLoading] = useState(true); //e gjejm nje variabel edhe eerdorimme set data
 
   useEffect(() => {
     const handler = async () => {
@@ -16,11 +15,11 @@ const MainWrapper = ({ children }) => {
     };
     handler();
   }, []);
-  return <>{loding ? null : children}</>; //nese loading eshte complet bohet children
+  return <>{loading ? null : children}</>; //nese loading eshte complet bohet children
 };
-
 export default MainWrapper;
 
+/*
 
 const MainWrapper=({children}) =>{  //kur thirret "projecti" vjen krejt kodi posht, nese jo
     const [loding,setLoading]=useState(true); //e gjejm nje variabel edhe eerdorimme set data
@@ -43,4 +42,4 @@ const MainWrapper=({children}) =>{  //kur thirret "projecti" vjen krejt kodi pos
 
 
 export default MainWrapper;
->>>>>>> 21a1b1a39e5062f1f0af7d86eecd5566a777eec4
+*/
