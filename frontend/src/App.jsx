@@ -22,7 +22,7 @@ function App() {
           <Route path="/forgot-password/" element={<ForgotPassword />} />
           <Route path="/create-new-password/" element={<CreateNewPassword />} />
           {/*BASE ROUTES */}
-          <Route path="" element={Index} />
+          <Route path="/" element={<Index />} />
         </Routes>
       </MainWrapper>
     </BrowserRouter>

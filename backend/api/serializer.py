@@ -204,6 +204,13 @@ class EnrolledCourseSerializer(serializers.ModelSerializer):
         model = api_models.EnrolledCourse
         fields = '__all__'
 
+def __init__(self, *args, **kwargs):
+    super(EnrolledCourseSerializer, self).__init__(*args, **kwargs)
+    request =self.context.get('request')
+    if request and request.method =="POST" :
+        self.Meta.depth=0
+    else:
+        self.Meta.depth=3 
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -239,3 +246,12 @@ class CourseSerializer(serializers.ModelSerializer):
             "rating_count",
             "reviews"
         ]
+
+def __init__(self, *args, **kwargs):
+    super(CourseSerializer, self).__init__(*args, **kwargs)
+    request =self.context.get('request')
+    if request and request.method =="POST" :
+        self.Meta.depth=0
+    else:
+        self.Meta.depth=3 
+    
