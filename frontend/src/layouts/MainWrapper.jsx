@@ -20,10 +20,6 @@ const MainWrapper = ({ children }) => {
 };
 
 export default MainWrapper;
-=======
-import {useEffect, useState} from "react";
-import {setUser} from "../utils/auth";
-
 
 
 const MainWrapper=({children}) =>{  //kur thirret "projecti" vjen krejt kodi posht, nese jo
