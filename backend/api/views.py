@@ -381,3 +381,42 @@ class CouponApplyAPIView(generics.CreateAPIView):
                     return Response({"message": "Coupon Already Applied"}, status=status.HTTP_200_OK)
         else:
             return Response({"message": "Coupon Not Found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+#payment
+#
+#
+
+class SearchCourseAPIView(generics.ListAPIView):
+    serializer_class = api_serializer.CourseSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        return api_models.Course.objects.filter(title__icontains=query, platform_status="Published", teacher_course_status="Published")
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
