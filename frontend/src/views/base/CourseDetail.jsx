@@ -21,6 +21,7 @@ function CourseDetail() {
     const [cartCount, setCartCount] = useContext(CartContext);
 
     const param = useParams();
+    console.log(param.slug);
 
     const country = GetCurrentAddress().country;
     const userId = UserData()?.user_id || 0;
@@ -32,11 +33,12 @@ function CourseDetail() {
         });
     };
 
+    console.log(course);
     useEffect(() => {
         fetchCourse();
-    }, []);
-
-    const addToCart = async (courseId, userId, price, country, cartId) => {
+    }, );
+//mbas country osht cartID
+    const addToCart = async (courseId, userId, price, country) => {
         setAddToCartBtn("Adding To Cart");
         const formdata = new FormData();
 
@@ -55,9 +57,9 @@ function CourseDetail() {
                     icon: "success",
                 });
 
-                // Set cart count after adding to cart
+              // Set cart count after adding to cart
                 apiInstance.get(`course/cart-list/${CartId()}/`).then((res) => {
-                    setCartCount(res.data?.length);
+                   setCartCount(res.data?.length);
                 });
             });
         } catch (error) {

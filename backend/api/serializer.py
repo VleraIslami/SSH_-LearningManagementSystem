@@ -102,13 +102,13 @@ class VariantItemSerializer(serializers.ModelSerializer):
 
 
 class VariantSerializer(serializers.ModelSerializer):
-    variant_items =VariantItemSerializer()
+
     class Meta:
         model = api_models.Variant
         fields = '__all__'
 
 class VariantItemSerializer(serializers.ModelSerializer):
- 
+    variant_items = VariantItemSerializer(many=True)
     class Meta:
         model = api_models.VariantItem
         fields = '__all__'
@@ -215,7 +215,7 @@ def __init__(self, *args, **kwargs):
 
 class CourseSerializer(serializers.ModelSerializer):
     students = EnrolledCourseSerializer(many=True, read_only=True)
-    curriculum = VariantItemSerializer(many=True, read_only=True)
+    curriculum = VariantSerializer(many=True, read_only=True)
     lectures = VariantItemSerializer(many=True, read_only=True)
     average_rating = serializers.ReadOnlyField()  # Add this line
     rating_count = serializers.ReadOnlyField()    # Add this line

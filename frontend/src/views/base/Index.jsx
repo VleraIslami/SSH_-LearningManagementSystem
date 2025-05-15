@@ -16,7 +16,7 @@ import apiInstance from "../../utils/axios";
 function Index() {
     const [courses, setCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [cartCount, setCartCount] = useContext(CartContext);
+    //const [cartCount, setCartCount] = useContext(CartContext);
 
     const country = GetCurrentAddress().country;
     const userId = UserData()?.user_id;
