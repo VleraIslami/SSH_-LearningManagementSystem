@@ -260,7 +260,7 @@ function Index() {
                                                         <button type="button" onClick={() => addToCart(c.id, userId, c.price, country, cartId)} className="text-inherit text-decoration-none btn btn-primary me-2">
                                                             <i className="fas fa-shopping-cart text-primary text-white" />
                                                         </button>
-                                                        <Link to={""} className="text-inherit text-decoration-none btn btn-primary">
+                                                        <Link to={`/course-detail/${c.slug}/`} className="text-inherit text-decoration-none btn btn-primary">
                                                             Enroll Now <i className="fas fa-arrow-right text-primary align-middle me-2 text-white" />
                                                         </Link>
                                                     </div>

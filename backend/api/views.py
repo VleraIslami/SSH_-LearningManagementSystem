@@ -158,6 +158,8 @@ class CartAPIView(generics.CreateAPIView):
         country_name = request.data['country_name']
         cart_id = request.data['cart_id']
 
+        print("course_id ===", course_id)
+
         # tash per me i barazu id e krejtve e perdorim first qe me marr tparin qe pershtatet
         course = api_models.Course.objects.filter(id=course_id).first()
         # user = User.objects.filter(id=user_id).first() # qikjo na prun error se nese ska usera ska qa kthen

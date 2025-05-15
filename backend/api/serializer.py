@@ -94,11 +94,11 @@ class TeacherSerializer(serializers.ModelSerializer):
              "review",
         ]
 
-class VariantItemSerializer(serializers.ModelSerializer):
+#class VariantItemSerializer(serializers.ModelSerializer):
  
-    class Meta:
-        model = api_models.VariantItem
-        fields = '__all__'
+#    class Meta:
+#        model = api_models.VariantItem
+#        fields = '__all__'
 
 
 class VariantSerializer(serializers.ModelSerializer):
@@ -108,7 +108,7 @@ class VariantSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class VariantItemSerializer(serializers.ModelSerializer):
-    variant_items = VariantItemSerializer(many=True)
+#    variant_items = VariantItemSerializer(many=True)
     class Meta:
         model = api_models.VariantItem
         fields = '__all__'
@@ -224,6 +224,7 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = api_models.Course
         fields = [
+            "id",
             "category",
             "teacher",
             "file",

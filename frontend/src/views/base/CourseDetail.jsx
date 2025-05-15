@@ -37,8 +37,8 @@ function CourseDetail() {
     useEffect(() => {
         fetchCourse();
     }, );
-//mbas country osht cartID
-    const addToCart = async (courseId, userId, price, country) => {
+
+    const addToCart = async (courseId, userId, price, country, cartId) => {
         setAddToCartBtn("Adding To Cart");
         const formdata = new FormData();
 
@@ -49,6 +49,7 @@ function CourseDetail() {
         formdata.append("cart_id", cartId);
 
         try {
+            //useAxios()
             await useAxios.post(`course/cart/`, formdata).then((res) => {
                 console.log(res.data);
                 setAddToCartBtn("Added To Cart");
@@ -765,13 +766,13 @@ function CourseDetail() {
                                                             )}
 
                                                             {addToCartBtn === "Added To Cart" && (
-                                                                <button type="button" className="btn btn-primary mb-0 w-100 me-2 mt-3" onClick={() => addToCart(course.id, 1, course.price, "Nigeria", "8325347")}>
+                                                                <button type="button" className="btn btn-primary mb-0 w-100 me-2 mt-3" onClick={() => addToCart(course.id, 1, course.price, "Kosovo", "409893")}>
                                                                     <i className="fas fa-check-circle"></i> Added To Cart
                                                                 </button>
                                                             )}
 
                                                             {addToCartBtn === "Adding To Cart" && (
-                                                                <button type="button" className="btn btn-primary mb-0 w-100 me-2 mt-3" onClick={() => addToCart(course.id, 1, course.price, "Nigeria", "8325347")}>
+                                                                <button type="button" className="btn btn-primary mb-0 w-100 me-2 mt-3" onClick={() => addToCart(course.id, 1, course.price, "Kosovo", "409893")}>
                                                                     <i className="fas fa-spinner fa-spin"></i> Adding To Cart
                                                                 </button>
                                                             )}
