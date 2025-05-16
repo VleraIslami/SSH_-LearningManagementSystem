@@ -12,6 +12,8 @@ import CreateNewPassword from "./views/auth/CreateNewPassword";
 import Index from "./views/base/Index";
 import CourseDetail from "./views/base/CourseDetail";
 import Cart from "./views/base/Cart";
+import Checkout from "./views/base/Cart";
+
 import apiInstance from "./utils/axios";
 
 function App() {
@@ -38,6 +40,7 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/course-detail/:slug" element={<CourseDetail />} />
           <Route path="/cart/" element={<Cart />} />
+          <Route path="/checkout/:order_oid/" element={<Checkout />} />
         </Routes>
       </MainWrapper>
     </BrowserRouter>

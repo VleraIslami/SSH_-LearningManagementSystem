@@ -334,7 +334,7 @@ class CreateOrderAPIView(generics.CreateAPIView):
         order.total = total_total
         order.save()
 
-        return Response({"message": "Order Created Successfully"}, status=status.HTTP_201_CREATED)
+        return Response({"message": "Order Created Successfully", "order_oid":order.oid}, status=status.HTTP_201_CREATED)
 
 
 class CheckoutAPIView(generics.RetrieveAPIView):
