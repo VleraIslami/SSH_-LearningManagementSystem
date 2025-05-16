@@ -21,7 +21,7 @@ function CourseDetail() {
     const [cartCount, setCartCount] = useContext(CartContext);
 
     const param = useParams();
-    console.log(param.slug);
+    console.log();
 
     const country = GetCurrentAddress().country;
     const userId = UserData()?.user_id || 0;

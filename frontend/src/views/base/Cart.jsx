@@ -23,6 +23,7 @@ function Cart() {
     const fetchCartItem = async () => {
         try {
             await apiInstance.get(`course/cart-list/${CartId()}/`).then((res) => {
+    
                 setCart(res.data);
             });
 
@@ -41,7 +42,10 @@ function Cart() {
     const navigate = useNavigate();
 
     const cartItemDelete = async (itemId) => {
-        await apiInstance.delete(`course/cart-item-delete/${CartId()}/${itemId}/`).then((res) => {
+        //await apiInstance.delete(`course/cart-item-delete/${CartId()}/${itemId}/`).then((res) => {
+            //console.log("Delete response:", res); // <- this will use the variable
+            //fetchCartItem();
+        await apiInstance.delete(`course/cart-item-delete/${CartId()}/${itemId}/`).then(() => {
             fetchCartItem();
             Toast().fire({
                 icon: "success",
