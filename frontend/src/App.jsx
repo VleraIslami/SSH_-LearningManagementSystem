@@ -1,5 +1,5 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-
+import { useState, useEffect } from "react";
 import MainWrapper from "./layouts/MainWrapper";
 import PrivateRoute from "./layouts/PrivateRoute";
 
@@ -12,8 +12,19 @@ import CreateNewPassword from "./views/auth/CreateNewPassword";
 import Index from "./views/base/Index";
 import CourseDetail from "./views/base/CourseDetail";
 import Cart from "./views/base/Cart";
+import apiInstance from "./utils/axios";
 
 function App() {
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    apiInstance.get(`course/cart-list/${CartId()}/`).then((res) => {
+      setCartCount(res.data?.length);
+    });
+
+    //console.log("cartCount", cartCount);
+  }, []);
+
   return (
     <BrowserRouter>
       <MainWrapper>
