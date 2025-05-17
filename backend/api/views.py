@@ -59,7 +59,7 @@ class PasswordResetEmailVerifyAPIView(generics.RetrieveAPIView):
 
             # localhost e ndrron qysh te pershtatet
             # duhet me pas nje refresh token
-            link = f"htpp://localhost:5173/create-new-password/?opt={user.opt}&uuidb64={uuidb64}&refresh_token{refresh_token}"
+            link = f"http://localhost:5173/create-new-password/?opt={user.opt}&uuidb64={uuidb64}&refresh_token={refresh_token}"
 
             context = {
                 "link": link,
@@ -398,8 +398,28 @@ class SearchCourseAPIView(generics.ListAPIView):
         query = self.request.GET.get('query')
         return api_models.Course.objects.filter(title__icontains=query, platform_status="Published", teacher_course_status="Published")
         
+class StudentSummaryAPIView(generics.ListAPIView):
+    serializer_class = api_serializer.StudentSummarySerializer
+    permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        user = User.objects.get(id=user_id)
 
+        total_courses = api_models.EnrolledCourse.objects.filter(user=user).count()
+        completed_lesson = api_models.CompletedLesson.objects.filter(user=user).count()
+        achieved_certificates = api_models.Certificate.objects.filter(user=user).count()
+
+        return [{
+            "total_courses": total_courses,
+            "completed_lesson": completed_lesson,
+            "achieved_certificates": achieved_certificates,
+        }]
+    
+    def list(self, request , *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 

@@ -66,13 +66,15 @@ function Index() {
     };
 
     // Pagination
-    const itemsPerPage = 1;
+    const itemsPerPage = 3; //kurset  qe shfaqet n faqen e pare
     const [currentPage, setCurrentPage] = useState(1);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = courses.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = courses.slice(indexOfFirstItem, indexOfLastItem); // nese perPaage osht 10 i merr 0-9 
     const totalPages = Math.ceil(courses.length / itemsPerPage);
-    const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+    const pageNumbers = Array.from(
+        { length: totalPages }, 
+        (_, index) => index + 1);
 
     const addToWishlist = (courseId) => {
         const formdata = new FormData();
