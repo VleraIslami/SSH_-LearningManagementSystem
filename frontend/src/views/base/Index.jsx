@@ -202,7 +202,7 @@ function Index() {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                                {currentItems?.map((c, index) => (
+                                {currentItems?.map((c,index) => (
                                     <div className="col">
                                         {/* Card */}
                                         <div className="card card-hover">
@@ -230,7 +230,7 @@ function Index() {
                                                     </a>
                                                 </div>
                                                 <h4 className="mb-2 text-truncate-line-2 ">
-                                                    <Link to={`/course-detail/slug/`} className="text-inherit text-decoration-none text-dark fs-5">
+                                                    <Link to={`/course-detail/${c.slug}/`} className="text-inherit text-decoration-none text-dark fs-5">
                                                         {c.title}
                                                     </Link>
                                                 </h4>

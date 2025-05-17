@@ -222,7 +222,7 @@ class CountrySerializer(serializers.ModelSerializer):
 class EnrolledCourseSerializer(serializers.ModelSerializer):
     lectures = VariantItemSerializer(many=True, read_only=True, source="lecture_set")
     completed_lessons = CompletedLessonSerializer(many=True, read_only=True, source="completedlesson_set")
-    curriculum = VariantItemSerializer(many=True, read_only=True, source="curriculum_set")
+    curriculum = VariantSerializer(many=True, read_only=True, source="curriculum_set")
     note = NoteSerializer(many=True, read_only=True, source="note_set")
     question_answer = Question_AnswerSerializer(many=True, read_only=True, source="question_answer_set")
     review = ReviewSerializer(many=True, read_only=True, source="review_set")
@@ -231,13 +231,13 @@ class EnrolledCourseSerializer(serializers.ModelSerializer):
         model = api_models.EnrolledCourse
         fields = '__all__'
 
-def __init__(self, *args, **kwargs):
-    super(EnrolledCourseSerializer, self).__init__(*args, **kwargs)
-    request =self.context.get('request')
-    if request and request.method =="POST" :
-        self.Meta.depth=0
-    else:
-        self.Meta.depth=3 
+    def __init__(self, *args, **kwargs):
+        super(EnrolledCourseSerializer, self).__init__(*args, **kwargs)
+        request =self.context.get('request')
+        if request and request.method =="POST" :
+            self.Meta.depth=0
+        else:
+            self.Meta.depth=3 
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -275,11 +275,11 @@ class CourseSerializer(serializers.ModelSerializer):
             "reviews"
         ]
 
-def __init__(self, *args, **kwargs):
-    super(CourseSerializer, self).__init__(*args, **kwargs)
-    request =self.context.get('request')
-    if request and request.method =="POST" :
-        self.Meta.depth=0
-    else:
-        self.Meta.depth=3 
+    def __init__(self, *args, **kwargs):
+        super(CourseSerializer, self).__init__(*args, **kwargs)
+        request =self.context.get('request')
+        if request and request.method =="POST" :
+            self.Meta.depth=0
+        else:
+            self.Meta.depth=3 
     

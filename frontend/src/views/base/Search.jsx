@@ -98,7 +98,7 @@ function Search() {
                         </div>
                         <div className="row">
                             <div className="col-lg-6">
-                                <input type="text" className="form-control lg mt-3" placeholder="Search Courses..." name="" id="" onChange={handleSeach} />
+                                <input type="text" className="form-control lg mt-3" placeholder="Search Courses..." name="" id="" onChange={(handleSeach)} />
                             </div>
                         </div>
                     </div>
