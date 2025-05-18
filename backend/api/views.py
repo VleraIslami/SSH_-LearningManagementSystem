@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
-from django.contrib.auth.hashers import change_password
+from django.contrib.auth.hashers import change_password, check_password
+from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 from api import serializer as api_serializer
 from api import models as api_models
-from userauths.models import User, Profile
+from userauths.models import Profile
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics, status
@@ -492,6 +494,14 @@ class StudentNoteCreateAPIView(generics.CreateAPIView):
     serializer_class = api_serializer.NoteSerializer
     permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        user_id = self.request.data['user_id']
+        enrollment_id = self.request.data['enrollment_id']
+
+        user = User.objects.get(id=user_id)
+        enrolled = api_models.EnrolledCourse.objects.get(enrollment_id=enrollment_id)
+        return api_models.Note.objects.filter(user=user, course=enrolled.course)
+
     def create(self, request, *args, **kwargs):
         user_id = request.data['user_id']
         enrollment_id = request.data['enrollment_id']
@@ -568,7 +578,19 @@ class StudentRateCourseUpdateAPIView(generics.RetrieveUpdateAPIView):
 
         user = User.objects.get(id=user_id)
         return api_models.Review.objects.get(id=reviwe_id,user=user)
-     
+
+def update_password_view(request):
+    if request.method == "POST":
+        user_id = request.POST.get("user_id")
+        new_password = request.POST.get("new_password")
+        try:
+            user = User.objects.get(id=user_id)
+            user.set_password(new_password)
+            user.save()
+            return JsonResponse({"message": "Password updated successfully!"})
+        except User.DoesNotExist:
+            return JsonResponse({"error": "User not found."}, status=404)
+
 
 
 
