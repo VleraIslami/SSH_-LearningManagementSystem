@@ -188,7 +188,7 @@ class VariantItem(models.Model):
     content_duration = models.CharField(max_length=1000, null=True, blank=True)
     preview = models.BooleanField(default=False)
     variant_item_id = ShortUUIDField(
-        unique=True, length=6, max_length=20, alphabet="0123456789")
+     length=6, max_length=20, alphabet="0123456789")
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
