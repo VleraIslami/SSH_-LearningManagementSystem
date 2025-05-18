@@ -505,14 +505,13 @@ class StudentNoteCreateAPIView(generics.CreateAPIView):
 
         return Response({"message": "Note Created Successfully"}, status=status.HTTP_201_CREATED)
 
-     """
-     {
-     "user_id": 1,
-     "enrollment_id": "2485",
-     "title": " Anote",
-     "note": "Vlera created  a note"
-     }
-     """
+#     {
+#     "user_id": 1,
+#     "enrollment_id": "2485",
+#     "title": " Anote",
+#      "note": "Vlera created  a note"
+#   }
+     
 class StudentNoteDetailAPIView(generics.ListAPIView):
     serializer_class = api_serializer.NoteSerializer
     permission_classes = [AllowAny]
@@ -550,14 +549,14 @@ class StudentRateCourseCreateAPIView(generics.CreateAPIView):
 
         return Response({"message": "Reviwe Created Successfully"}, status=status.HTTP_201_CREATED)
 
-"""
-{
-"user_id": 1,
-"course_id": 1,
-"rating": 5,
-"review": "VERY NICE COURSE"
-}
-"""
+
+#{
+#"user_id": 1,
+#"course_id": 1,
+#"rating": 5,
+#"review": "VERY NICE COURSE"
+#}
+
 
 class StudentRateCourseUpdateAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = api_serializer.ReviewSerializer
