@@ -3,20 +3,28 @@ import { useState, useEffect } from "react";
 import MainWrapper from "./layouts/MainWrapper";
 import PrivateRoute from "./layouts/PrivateRoute";
 
+import Search from "./views/base/Search";
+
 import Register from "../src/views/auth/Register";
+import StudentDashbord from "viws/student/Dashbord";
+import StudentCourse from "viws/student/Courses";
+import CourseDetail from "./views/base/CourseDetail";
+import Wishlist from "./views/student/Wishlist";
+import StudentProfile from "./views/student/Profile";
+import useAxios from "./utils/useAxios";
+import UserData from "./views/plugin/UserData";
+import StudentChangePassword from "./views/student/ChangePassword";
 
 import Login from "../src/views/auth/Login";
 import Logout from "./views/auth/Logout";
 import ForgotPassword from "./views/auth/ForgotPassword";
 import CreateNewPassword from "./views/auth/CreateNewPassword";
 import Index from "./views/base/Index";
-import CourseDetail from "./views/base/CourseDetail";
 import Cart from "./views/base/Cart";
 import Checkout from "./views/base/Cart";
 
 import apiInstance from "./utils/axios";
 import CartId from "./views/plugin/CartId";
-import Search from "./views/base/Search";
 
 function App() {
   const [cartCount, setCartCount] = useState(0);

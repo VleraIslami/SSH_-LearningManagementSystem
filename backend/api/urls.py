@@ -15,6 +15,9 @@ urlpatterns = [
     # ka mundesi del nje error si  no such coulumn userauths_user.refresh_token
     # edhe duhet me shku me ndez serverin(makemigrations) pastaj migrate (13)
     path("user/password-change/", api_views.PasswordChangeApiView.as_view()),
+    path("user/profile/user_id>/", api_views.ProfileAPIView.as_view()),
+    path("user/change-password/", api_views.ChangePasswordAPIView.as_view()),
+
 
     # Core Endpoints
     path("course/category/", api_views.CategoryListAPIView.as_view()),

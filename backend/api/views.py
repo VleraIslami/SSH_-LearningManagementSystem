@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.contrib.auth.hashers import change_password
 
 from api import serializer as api_serializer
 from api import models as api_models
@@ -118,10 +119,33 @@ class PasswordChangeApiView(generics.CreateAPIView):
             return Response({"message": "User Does Not Exists"}, status=status.HTTP_404_NOT_FOUND)
 
 
+
+class ChangePasswordAPIView(generics.CreateAPIView):
+    serializer_class = api_serializer.UserSerializer
+    permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        user_id = request.data['user_id']
+        old_password = request.data['old_password']
+        new_password = request.data['new_password']
+
+        user=User.objects.get(id=user_id)
+        if user is not None:
+            if check_password(old_password, user.password):
+                user.set_password(new_password)
+                user.save()
+                return Response({"message": "Password changed successfully", "icon": "success"})
+            else:
+                return Response({"message": "Old password is incorrect", "icon": "warning"})
+        else:
+            return Response({"message": "User does not exist", "icon": "error"})
+
+
 class CategoryListAPIView(generics.ListAPIView):
     queryset = api_models.Category.objects.filter(active=True)
     serializer_class = api_serializer.CategorySerializer
     permission_classes = [AllowAny]
+
 
 
 class CourseListAPIView(generics.ListAPIView):
@@ -442,6 +466,7 @@ class StudentCourseDetailAPIView(generics.ListAPIView):
         user =User.objects.get(id=user_id)
         return api_models.EnrolledCourse.objects.get(user=user, enrollment_id=enrollment_id)
 
+class StudentNote
 
 
 
