@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.contrib.auth.hashers import change_password
 
 from api import serializer as api_serializer
 from api import models as api_models
@@ -118,10 +119,33 @@ class PasswordChangeApiView(generics.CreateAPIView):
             return Response({"message": "User Does Not Exists"}, status=status.HTTP_404_NOT_FOUND)
 
 
+
+class ChangePasswordAPIView(generics.CreateAPIView):
+    serializer_class = api_serializer.UserSerializer
+    permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        user_id = request.data['user_id']
+        old_password = request.data['old_password']
+        new_password = request.data['new_password']
+
+        user=User.objects.get(id=user_id)
+        if user is not None:
+            if check_password(old_password, user.password):
+                user.set_password(new_password)
+                user.save()
+                return Response({"message": "Password changed successfully", "icon": "success"})
+            else:
+                return Response({"message": "Old password is incorrect", "icon": "warning"})
+        else:
+            return Response({"message": "User does not exist", "icon": "error"})
+
+
 class CategoryListAPIView(generics.ListAPIView):
     queryset = api_models.Category.objects.filter(active=True)
     serializer_class = api_serializer.CategorySerializer
     permission_classes = [AllowAny]
+
 
 
 class CourseListAPIView(generics.ListAPIView):
@@ -464,9 +488,87 @@ class StudentCourseCompletedCreateAPIView(generics.CreateAPIView):
             api_models.CompletedLesson.objects.create(user=user, course=course, variant_item=variant_item)
             return Response({"message": "Lesson marked as completed"})
 
+class StudentNoteCreateAPIView(generics.CreateAPIView):
+    serializer_class = api_serializer.NoteSerializer
+    permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        user_id = request.data['user_id']
+        enrollment_id = request.data['enrollment_id']
+        title=request.data['title']
+        note=request.data['note']
+
+        user = User.objects.get(id=user_id)
+        enrolled = api_models.EnrolledCourse.objects.get(enrollment_id=enrollment_id)
+
+        api_models.Note.objects.create(user=user, course=enrolled.course, note=note, title=title)
+
+        return Response({"message": "Note Created Successfully"}, status=status.HTTP_201_CREATED)
+
+#     {
+#     "user_id": 1,
+#     "enrollment_id": "2485",
+#     "title": " Anote",
+#      "note": "Vlera created  a note"
+#   }
+     
+class StudentNoteDetailAPIView(generics.ListAPIView):
+    serializer_class = api_serializer.NoteSerializer
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        user_id = self.kwargs['user_id']
+        enrollment_id = self.kwargs['enrollment_id']
+        note_id = self.kwargs['note_id']
+
+        user = User.objects.get(id=user_id)
+        enrolled = api_models.EnrolledCourse.objects.get(enrollment_id=enrollment_id)
+        note= api_models.Note.objects.filter(user=user, course=enrolled.course, id=note_id)
+        return note
+
+class StudentRateCourseCreateAPIView(generics.CreateAPIView):
+    serializer_class = api_serializer.ReviewSerializer
+    permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        user_id = request.data['user_id']
+        course_id = request.data['course_id']
+        rateing = request.data['rating']
+        review = request.data['review']
+
+        user = User.objects.get(id=user_id)
+        course = api_models.Course.objects.get(id=course_id)
+
+        api_models.Review.objects.create(
+            user=user, 
+            course=course, 
+            review=review, 
+            rating=rateing,
+            active=True,
+            )
+
+        return Response({"message": "Reviwe Created Successfully"}, status=status.HTTP_201_CREATED)
 
 
+#{
+#"user_id": 1,
+#"course_id": 1,
+#"rating": 5,
+#"review": "VERY NICE COURSE"
+#}
 
+
+class StudentRateCourseUpdateAPIView(generics.RetrieveUpdateAPIView):
+    serializer_class = api_serializer.ReviewSerializer
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        user_id = self.kwargs['user_id']
+        reviwe_id = self.kwargs['review_id']
+
+        user = User.objects.get(id=user_id)
+        return api_models.Review.objects.get(id=reviwe_id,user=user)
+     
 
 
 

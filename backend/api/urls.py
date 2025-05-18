@@ -15,6 +15,9 @@ urlpatterns = [
     # ka mundesi del nje error si  no such coulumn userauths_user.refresh_token
     # edhe duhet me shku me ndez serverin(makemigrations) pastaj migrate (13)
     path("user/password-change/", api_views.PasswordChangeApiView.as_view()),
+    #path("user/profile/user_id>/", api_views.ProfileAPIView.as_view()),
+    path("user/change-password/", api_views.ChangePasswordAPIView.as_view()),
+
 
     # Core Endpoints
     path("course/category/", api_views.CategoryListAPIView.as_view()),
@@ -37,4 +40,9 @@ urlpatterns = [
      path("student/course-list/<user_id>/", api_views.StudentCourseListAPIView.as_view()),
      path("student/course-detail/<user_id>/<enrollment_id>/", api_views.StudentCourseListAPIView.as_view()),
      path("student/course-completed/", api_views.StudentCourseCompletedCreateAPIView.as_view()),
+     path("student/course-note/", api_views.StudentNoteCreateAPIView.as_view()),
+     path("student/course-note-detail/<user_id>/<note_id><enrollment_id>/<note_id>/", api_views.StudentNoteDetailAPIView.as_view()),
+     path("student/rate-course/", api_views.StudentRateCourseCreateAPIView.as_view()),
+     path("student/review-detail/<user_id>/<review_id>/", api_views.StudentRateCourseUpdateAPIView.as_view()),
+
 ]
