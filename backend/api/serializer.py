@@ -225,7 +225,7 @@ class EnrolledCourseSerializer(serializers.ModelSerializer):
     curriculum = VariantSerializer(many=True, read_only=True, source="curriculum_set")
     note = NoteSerializer(many=True, read_only=True, source="note_set")
     question_answer = Question_AnswerSerializer(many=True, read_only=True, source="question_answer_set")
-    review = ReviewSerializer(many=True, read_only=True, source="review_set")
+    review = ReviewSerializer(many=False, read_only=True, source="review_set")
 
     class Meta:
         model = api_models.EnrolledCourse

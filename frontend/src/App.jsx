@@ -6,8 +6,12 @@ import PrivateRoute from "./layouts/PrivateRoute";
 import Search from "./views/base/Search";
 
 import Register from "../src/views/auth/Register";
-import StudentDashbord from "viws/student/Dashbord";
+import StudentDashbord from "views/student/Dashbord";
+
 import StudentCourse from "viws/student/Courses";
+import Courses from "viws/student/Courses";
+import StudentCourseDetail from "./views/student/CourseDetail";
+
 import CourseDetail from "./views/base/CourseDetail";
 import Wishlist from "./views/student/Wishlist";
 import StudentProfile from "./views/student/Profile";
@@ -52,6 +56,14 @@ function App() {
           <Route path="/cart/" element={<Cart />} />
           <Route path="/checkout/:order_oid/" element={<Checkout />} />
           <Route path="/search/" element={<Search />} />
+
+          {/*student routes*/}
+          <Route path="/student/dashboard/" element={<StudentDashbord />} />
+          <Route path="/student/courses/" element={<Courses />} />
+          <Route
+            path="/student/courses/:enrollment_id"
+            element={<StudentCourseDetail />}
+          />
         </Routes>
       </MainWrapper>
     </BrowserRouter>
