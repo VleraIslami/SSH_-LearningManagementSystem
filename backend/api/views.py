@@ -579,7 +579,7 @@ class StudentRateCourseUpdateAPIView(generics.RetrieveUpdateAPIView):
         user = User.objects.get(id=user_id)
         return api_models.Review.objects.get(id=reviwe_id,user=user)
 
-#def update_password_view(request):
+def update_password_view(request):
     if request.method == "POST":
         user_id = request.POST.get("user_id")
         new_password = request.POST.get("new_password")

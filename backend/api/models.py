@@ -9,6 +9,7 @@ from moviepy.editor import VideoFileClip
 import math
 
 
+
 LANGUAGE = (
     ("English", "English"),
     ("German", "German"),

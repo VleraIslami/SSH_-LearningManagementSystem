@@ -94,11 +94,19 @@ class TeacherSerializer(serializers.ModelSerializer):
              "review",
         ]
 
-#class VariantItemSerializer(serializers.ModelSerializer):
+class VariantItemSerializer(serializers.ModelSerializer):
  
-#    class Meta:
-#        model = api_models.VariantItem
-#        fields = '__all__'
+    class Meta:
+        model = api_models.VariantItem
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(VariantItemSerializer, self).__init__(*args, **kwargs)
+        request =self.context.get('request')
+        if request and request.method =="POST" :
+            self.Meta.depth=0
+        else:
+            self.Meta.depth=3
 
 
 class VariantSerializer(serializers.ModelSerializer):
@@ -107,11 +115,15 @@ class VariantSerializer(serializers.ModelSerializer):
         model = api_models.Variant
         fields = '__all__'
 
-class VariantItemSerializer(serializers.ModelSerializer):
-#    variant_items = VariantItemSerializer(many=True)
-    class Meta:
-        model = api_models.VariantItem
-        fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super(VariantSerializer, self).__init__(*args, **kwargs)
+        request =self.context.get('request')
+        if request and request.method =="POST" :
+            self.Meta.depth=0
+        else:
+            self.Meta.depth=3
+
+
 
 class Question_Answer_MessageSerializer(serializers.ModelSerializer):
     Profile = ProfileSerializer(many=False)
@@ -183,6 +195,13 @@ class CompletedLessonSerializer(serializers.ModelSerializer):
         model = api_models.CompletedLesson
         fields = '__all__'
 
+        def __init__(self, *args, **kwargs):
+             super(CompletedLessonSerializer, self).__init__(*args, **kwargs)
+             request =self.context.get('request')
+             if request and request.method =="POST" :
+              self.Meta.depth=0
+             else:
+                self.Meta.depth=3
 
 
 class NoteSerializer(serializers.ModelSerializer):
