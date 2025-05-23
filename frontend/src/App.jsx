@@ -26,8 +26,8 @@ import CreateNewPassword from "./views/auth/CreateNewPassword";
 import Index from "./views/base/Index";
 import Cart from "./views/base/Cart";
 import Checkout from "./views/base/Cart";
-
 import apiInstance from "./utils/axios";
+
 import CartId from "./views/plugin/CartId";
 
 function App() {
