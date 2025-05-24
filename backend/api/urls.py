@@ -48,4 +48,10 @@ urlpatterns = [
      path("student/question-answer-list-create/<course_id>/", api_views.QuestionAnswerListCreateAPIView.as_view()),
      path("student/question-answer-message-create/", api_views.QuestionAnswerMessageSendAPIView.as_view()),
 
+     #Teacher Routes
+     path("teacher/summary/<teacher_id>/", api_views.TeacherSummaryAPIView.as_view()),
+
+
+
+
 ]

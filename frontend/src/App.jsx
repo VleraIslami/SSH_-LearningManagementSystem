@@ -83,6 +83,10 @@ function App() {
           />
           <Route path="/student/wishlist/" element={<Wishlist />} />
           <Route path="/student/profile/" element={<StudentProfile />} />
+          <Route
+            path="/student/change-password/"
+            element={<StudentChangePassword />}
+          />
         </Routes>
       </MainWrapper>
     </BrowserRouter>
