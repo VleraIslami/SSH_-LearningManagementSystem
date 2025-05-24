@@ -122,7 +122,7 @@ class PasswordChangeApiView(generics.CreateAPIView):
 
 
 
-class ChangePasswordAPIView(generics.CreateAPIView):
+class ChangePasswordAPIView(generics.APIView):
     serializer_class = api_serializer.UserSerializer
     permission_classes = [AllowAny]
 
@@ -141,6 +141,20 @@ class ChangePasswordAPIView(generics.CreateAPIView):
                 return Response({"message": "Old password is incorrect", "icon": "warning"})
         else:
             return Response({"message": "User does not exist", "icon": "error"})
+
+
+
+
+
+
+class ProfileAPIView(generics.RetrieveUpdateAPIView):
+    serializer_class = api_serializer.ProfileSerializer
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        user_id = self.kwargs['user_id']
+        user = User.objects.get(id=user_id)
+        return Profile.objects.get(user=user)
 
 
 class CategoryListAPIView(generics.ListAPIView):

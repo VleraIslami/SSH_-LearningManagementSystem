@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import MainWrapper from "./layouts/MainWrapper";
 import PrivateRoute from "./layouts/PrivateRoute";
 
+import { CartContext, ProfileContext } from "./views/plugin/Context";
+
 import Search from "./views/base/Search";
 
 import Register from "../src/views/auth/Register";
@@ -32,6 +34,12 @@ import CartId from "./views/plugin/CartId";
 
 function App() {
   const [cartCount, setCartCount] = useState(0);
+  const [profile, setProfile] = useState({
+    image: "",
+    full_name: "",
+    about: "",
+    country: "",
+  });
 
   useEffect(() => {
     apiInstance.get(`course/cart-list/${CartId()}/`).then((res) => {
@@ -39,10 +47,19 @@ function App() {
     });
 
     //console.log("cartCount", cartCount);
+
+    useAxios()
+      .get(`user/profile/${UserData()?.user_id}/`)
+      .then((res) => {
+        setProfile(res.data);
+      });
   }, []);
 
   return (
     <BrowserRouter>
+      <ProfileContext.Provider
+        value={[profile, setProfile]}
+      ></ProfileContext.Provider>
       <MainWrapper>
         <Routes>
           <Route path="/register/" element={<Register />} />
@@ -64,6 +81,8 @@ function App() {
             path="/student/courses/:enrollment_id"
             element={<StudentCourseDetail />}
           />
+          <Route path="/student/wishlist/" element={<Wishlist />} />
+          <Route path="/student/profile/" element={<StudentProfile />} />
         </Routes>
       </MainWrapper>
     </BrowserRouter>
